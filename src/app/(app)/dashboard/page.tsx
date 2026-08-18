@@ -1,4 +1,5 @@
 import {
+  Building2,
   CalendarDays,
   CircleAlert,
   Clock3,
@@ -10,16 +11,24 @@ import {
 } from "lucide-react";
 
 import { signOut } from "@/app/(app)/dashboard/actions";
+import { getCurrentUserClinicMemberships } from "@/lib/auth/guards";
 import { getCurrentAccount } from "@/lib/auth/session";
 
 export const dynamic = "force-dynamic";
 
-const stats = [
-  { label: "Citas hoy", value: "0", detail: "Sin datos conectados", icon: CalendarDays },
-  { label: "Pendientes", value: "0", detail: "Por confirmar", icon: Clock3 },
-  { label: "Pacientes", value: "0", detail: "Activos", icon: Users },
-  { label: "Profesionales", value: "0", detail: "En agenda", icon: Stethoscope },
-];
+function buildStats(activeClinicCount: number) {
+  return [
+    { label: "Citas hoy", value: "0", detail: "Sin datos conectados", icon: CalendarDays },
+    { label: "Pendientes", value: "0", detail: "Por confirmar", icon: Clock3 },
+    { label: "Pacientes", value: "0", detail: "Activos", icon: Users },
+    {
+      label: "Clinicas",
+      value: activeClinicCount.toString(),
+      detail: "Vinculadas al usuario",
+      icon: Building2,
+    },
+  ];
+}
 
 const quickActions = [
   { label: "Nueva cita", icon: Plus },
@@ -27,8 +36,24 @@ const quickActions = [
   { label: "Nuevo servicio", icon: Stethoscope },
 ];
 
+const roleLabels = {
+  clinic_admin: "Admin",
+  professional: "Profesional",
+  readonly: "Lectura",
+  reception: "Recepcion",
+} as const;
+
+const clinicStatusLabels = {
+  active: "Activa",
+  inactive: "Inactiva",
+  suspended: "Suspendida",
+  trialing: "Prueba",
+} as const;
+
 export default async function DashboardPage() {
   const account = await getCurrentAccount();
+  const memberships = await getCurrentUserClinicMemberships();
+  const stats = buildStats(memberships.length);
 
   return (
     <main className="min-h-screen bg-[#f7f8f4]">
@@ -104,6 +129,39 @@ export default async function DashboardPage() {
           </div>
 
           <aside className="space-y-6">
+            <div className="rounded-lg border border-[#d9ded6] bg-white p-5 shadow-sm">
+              <div className="flex items-center justify-between gap-4">
+                <h2 className="text-base font-semibold text-[#202722]">Clinicas</h2>
+                <Building2 aria-hidden="true" className="h-5 w-5 text-[#0f766e]" />
+              </div>
+              {memberships.length > 0 ? (
+                <div className="mt-4 divide-y divide-[#e4e8e2]">
+                  {memberships.map((membership) => (
+                    <div className="py-3 first:pt-0 last:pb-0" key={membership.id}>
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="truncate text-sm font-medium text-[#202722]">
+                            {membership.clinic?.name ?? "Clinica sin datos visibles"}
+                          </p>
+                          <p className="mt-1 truncate text-xs text-[#667069]">
+                            {membership.clinic ? `/${membership.clinic.slug}` : membership.clinicId}
+                          </p>
+                        </div>
+                        <span className="shrink-0 rounded-md bg-[#e9f5f3] px-2 py-1 text-xs font-medium text-[#0f766e]">
+                          {roleLabels[membership.role]}
+                        </span>
+                      </div>
+                      {membership.clinic ? (
+                        <p className="mt-2 text-xs text-[#667069]">{clinicStatusLabels[membership.clinic.status]}</p>
+                      ) : null}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="mt-4 text-sm leading-6 text-[#667069]">Sin clinicas vinculadas.</p>
+              )}
+            </div>
+
             <div className="rounded-lg border border-[#d9ded6] bg-white p-5 shadow-sm">
               <h2 className="text-base font-semibold text-[#202722]">Accesos rapidos</h2>
               <div className="mt-4 grid gap-3">

@@ -12,4 +12,43 @@ Reglas para las migraciones:
 - Registrar acciones importantes en `audit_logs`.
 - Guardar fechas de citas en UTC.
 
-La Fase 2 introducira las primeras migraciones reales.
+## Migraciones
+
+La Fase 2 introduce la migracion `20260818120000_phase_2_multi_tenant_roles.sql` con:
+
+- `profiles`: perfil publico minimo sincronizado desde `auth.users`.
+- `clinics`: tenant principal del SaaS.
+- `clinic_members`: pertenencia y rol por clinica.
+- `audit_logs`: base para trazabilidad de acciones importantes.
+- Enums de rol/estado.
+- RLS y helpers SQL para superadmin, pertenencia y roles por clinica.
+
+Para aplicarla en un proyecto Supabase real:
+
+```bash
+supabase link --project-ref <project-ref>
+supabase db push
+```
+
+Para probarla en local con Supabase CLI:
+
+```bash
+supabase start
+supabase migration up
+```
+
+## Configuracion manual pendiente al conectar Supabase
+
+Cuando exista el proyecto Supabase real:
+
+1. Copiar `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` en `.env.local`.
+2. Configurar la URL de callback de Auth como `http://localhost:3000/auth/callback` para desarrollo.
+3. Aplicar las migraciones.
+4. Crear el primer usuario desde `/login`.
+5. Si ese usuario debe ser superadmin, ejecutar en Supabase SQL:
+
+```sql
+update public.profiles
+set platform_role = 'superadmin'
+where email = 'tu-email@dominio.com';
+```

@@ -5,6 +5,54 @@ export const clinicRoles = ["clinic_admin", "reception", "professional", "readon
 export type PlatformRole = (typeof platformRoles)[number];
 export type ClinicRole = (typeof clinicRoles)[number];
 
+export const clinicStatuses = ["active", "inactive", "trialing", "suspended"] as const;
+export const clinicMemberStatuses = ["active", "invited", "suspended"] as const;
+
+export type ClinicStatus = (typeof clinicStatuses)[number];
+export type ClinicMemberStatus = (typeof clinicMemberStatuses)[number];
+
+export const clinicPermissions = [
+  "clinic:read",
+  "clinic:update",
+  "members:read",
+  "members:manage",
+  "audit:read",
+  "settings:manage",
+] as const;
+
+export type ClinicPermission = (typeof clinicPermissions)[number];
+
+export const clinicRolePermissions = {
+  clinic_admin: [
+    "clinic:read",
+    "clinic:update",
+    "members:read",
+    "members:manage",
+    "audit:read",
+    "settings:manage",
+  ],
+  reception: ["clinic:read", "members:read"],
+  professional: ["clinic:read"],
+  readonly: ["clinic:read"],
+} satisfies Record<ClinicRole, readonly ClinicPermission[]>;
+
+export function isClinicRole(value: unknown): value is ClinicRole {
+  return typeof value === "string" && clinicRoles.includes(value as ClinicRole);
+}
+
+export function hasAnyClinicRole(role: ClinicRole | null | undefined, allowedRoles: readonly ClinicRole[]) {
+  return Boolean(role && allowedRoles.includes(role));
+}
+
+export function hasClinicPermission(role: ClinicRole | null | undefined, permission: ClinicPermission) {
+  if (!role) {
+    return false;
+  }
+
+  const permissions = clinicRolePermissions[role] as readonly ClinicPermission[];
+  return permissions.includes(permission);
+}
+
 export const appointmentStatuses = [
   "pending",
   "confirmed",

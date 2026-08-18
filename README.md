@@ -51,8 +51,8 @@ npm run build
 - No se usa `service_role` ni claves privadas en el frontend.
 - La proteccion de rutas usa `supabase.auth.getClaims()` en servidor.
 - El acceso a `/dashboard` sin sesion solo se permite en desarrollo cuando faltan variables de Supabase.
-- Las futuras tablas publicas de Supabase deben incluir `GRANT` explicitos, RLS y politicas por tenant.
-- Los datos multi-tenant se modelaran con `clinic_id` desde la Fase 2.
+- Las tablas publicas de Supabase deben incluir `GRANT` explicitos, RLS y politicas por tenant.
+- Los datos multi-tenant se modelan con `clinic_id`.
 - No se guardaran datos clinicos sensibles en el MVP.
 
 ## Estado de fases
@@ -76,6 +76,18 @@ Fase 1 completada:
 - Layout, 404, loading y error boundary base.
 - Pagina publica inicial `/reservar/[clinicSlug]`.
 
+Fase 2 completada:
+
+- Migracion Supabase para `profiles`, `clinics`, `clinic_members` y `audit_logs`.
+- Enums de roles y estados para plataforma, clinicas y miembros.
+- RLS por tenant con helpers SQL para superadmin y pertenencia a clinica.
+- Trigger de sincronizacion de perfil desde `auth.users`.
+- Trigger de membresia owner al crear una clinica.
+- Tipos TypeScript de Supabase actualizados para las tablas iniciales.
+- Matriz de permisos por rol de clinica.
+- Guards de servidor para usuario, rol y permiso por clinica.
+- Dashboard conectado al estado de membresias de clinica.
+
 ## Siguiente fase
 
-Fase 2: modelo multi-tenant inicial, roles por clinica, migraciones Supabase con RLS y guards de permisos.
+Fase 3: modelos principales de pacientes, profesionales, servicios, salas/recursos y base de disponibilidad.
