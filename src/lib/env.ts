@@ -34,6 +34,10 @@ export const isSupabaseConfigured = Boolean(
   env.NEXT_PUBLIC_SUPABASE_URL && env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
 );
 
+export const isDevelopmentRuntime = process.env.NODE_ENV !== "production";
+
+export const canBypassAuthForLocalDevelopment = isDevelopmentRuntime && !isSupabaseConfigured;
+
 export function getSupabaseConfig() {
   if (!env.NEXT_PUBLIC_SUPABASE_URL || !env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY) {
     throw new Error("Supabase is not configured. Copy .env.example to .env.local and fill the public keys.");

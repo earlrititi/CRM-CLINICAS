@@ -10,8 +10,7 @@ import {
 } from "lucide-react";
 
 import { signOut } from "@/app/(app)/dashboard/actions";
-import { isSupabaseConfigured } from "@/lib/env";
-import { createClient } from "@/lib/supabase/server";
+import { getCurrentAccount } from "@/lib/auth/session";
 
 export const dynamic = "force-dynamic";
 
@@ -29,14 +28,7 @@ const quickActions = [
 ];
 
 export default async function DashboardPage() {
-  let accountLabel = "Sesion pendiente";
-
-  if (isSupabaseConfigured) {
-    const supabase = await createClient();
-    const { data } = await supabase.auth.getClaims();
-    const claims = data?.claims;
-    accountLabel = typeof claims?.email === "string" ? claims.email : "Sesion activa";
-  }
+  const account = await getCurrentAccount();
 
   return (
     <main className="min-h-screen bg-[#f7f8f4]">
@@ -47,7 +39,7 @@ export default async function DashboardPage() {
             <h1 className="mt-1 text-xl font-semibold text-[#202722]">Panel interno</h1>
           </div>
           <div className="flex items-center gap-3">
-            <span className="hidden max-w-[260px] truncate text-sm text-[#667069] sm:block">{accountLabel}</span>
+            <span className="hidden max-w-[260px] truncate text-sm text-[#667069] sm:block">{account.email}</span>
             <form action={signOut}>
               <button
                 className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-[#cfd7cf] bg-white text-[#202722] hover:border-[#0f766e] hover:text-[#0f766e]"
@@ -62,7 +54,7 @@ export default async function DashboardPage() {
       </header>
 
       <div className="mx-auto max-w-7xl px-5 py-6">
-        {!isSupabaseConfigured ? (
+        {account.isDevelopmentBypass ? (
           <section className="mb-6 rounded-lg border border-[#f0d7a7] bg-[#fffaf0] p-4 text-sm text-[#7c4a03]">
             <div className="flex gap-3">
               <CircleAlert aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0" />
@@ -70,7 +62,8 @@ export default async function DashboardPage() {
                 <p className="font-medium">Supabase no esta configurado.</p>
                 <p className="mt-1 leading-6">
                   Copia `.env.example` a `.env.local` y rellena `NEXT_PUBLIC_SUPABASE_URL` y
-                  `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` para activar login y proteccion real de rutas.
+                  `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` para activar login y proteccion real de rutas. Este acceso sin
+                  sesion solo esta permitido en desarrollo.
                 </p>
               </div>
             </div>

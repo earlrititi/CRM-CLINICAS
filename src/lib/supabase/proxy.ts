@@ -2,7 +2,7 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 import { getSafeNextPath } from "@/lib/auth/redirects";
-import { getSupabaseConfig, isSupabaseConfigured } from "@/lib/env";
+import { canBypassAuthForLocalDevelopment, getSupabaseConfig, isSupabaseConfigured } from "@/lib/env";
 import type { Database } from "@/lib/supabase/types";
 
 const protectedPrefixes = ["/dashboard"];
@@ -14,8 +14,18 @@ function startsWithPrefix(pathname: string, prefixes: string[]) {
 
 export async function updateSession(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
+  const isProtectedRoute = startsWithPrefix(pathname, protectedPrefixes);
+  const isAuthRoute = startsWithPrefix(pathname, authPrefixes);
 
   if (!isSupabaseConfigured) {
+    if (isProtectedRoute && !canBypassAuthForLocalDevelopment) {
+      const redirectUrl = request.nextUrl.clone();
+      redirectUrl.pathname = "/login";
+      redirectUrl.searchParams.set("error", "supabase_not_configured");
+      redirectUrl.searchParams.set("next", getSafeNextPath(`${pathname}${request.nextUrl.search}`));
+      return NextResponse.redirect(redirectUrl);
+    }
+
     return NextResponse.next({ request });
   }
 
@@ -44,9 +54,6 @@ export async function updateSession(request: NextRequest) {
   const { data } = await supabase.auth.getClaims();
 
   const isAuthenticated = Boolean(data?.claims);
-  const isProtectedRoute = startsWithPrefix(pathname, protectedPrefixes);
-  const isAuthRoute = startsWithPrefix(pathname, authPrefixes);
-
   if (isProtectedRoute && !isAuthenticated) {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = "/login";

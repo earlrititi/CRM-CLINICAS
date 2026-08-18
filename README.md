@@ -20,7 +20,9 @@ npm run dev
 
 Abre `http://localhost:3000`.
 
-Sin variables de Supabase, la app compila y muestra el panel en modo pendiente de configuracion. Para activar login y rutas privadas reales:
+Sin variables de Supabase, la app compila y en desarrollo muestra el panel en modo pendiente de configuracion. En produccion, las rutas privadas no se sirven sin Supabase configurado.
+
+Para activar login y rutas privadas reales:
 
 ```env
 NEXT_PUBLIC_APP_URL=http://localhost:3000
@@ -48,9 +50,31 @@ npm run build
 
 - No se usa `service_role` ni claves privadas en el frontend.
 - La proteccion de rutas usa `supabase.auth.getClaims()` en servidor.
+- El acceso a `/dashboard` sin sesion solo se permite en desarrollo cuando faltan variables de Supabase.
 - Las futuras tablas publicas de Supabase deben incluir `GRANT` explicitos, RLS y politicas por tenant.
 - Los datos multi-tenant se modelaran con `clinic_id` desde la Fase 2.
 - No se guardaran datos clinicos sensibles en el MVP.
+
+## Estado de fases
+
+Fase 0 completada:
+
+- Proyecto inspeccionado.
+- Stack definido sobre Next.js, TypeScript, Tailwind, Supabase SSR y Zod.
+- Plan por fases documentado en `prompt.md`.
+
+Fase 1 completada:
+
+- TypeScript estricto y scripts base.
+- Estructura `src/app`, `src/lib`, `supabase`.
+- Variables de entorno documentadas en `.env.example`.
+- Cliente Supabase de servidor, navegador y proxy.
+- Login por magic link preparado con Supabase Auth.
+- Callback de autenticacion.
+- Ruta privada `/dashboard` protegida cuando Supabase esta configurado.
+- Bloqueo de rutas privadas sin Supabase en produccion.
+- Layout, 404, loading y error boundary base.
+- Pagina publica inicial `/reservar/[clinicSlug]`.
 
 ## Siguiente fase
 
