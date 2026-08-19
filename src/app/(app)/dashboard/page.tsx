@@ -1,8 +1,8 @@
 import {
   Building2,
   CalendarDays,
+  ClipboardList,
   CircleAlert,
-  Clock3,
   LogOut,
   Plus,
   Stethoscope,
@@ -13,19 +13,20 @@ import {
 import { signOut } from "@/app/(app)/dashboard/actions";
 import { getCurrentUserClinicMemberships } from "@/lib/auth/guards";
 import { getCurrentAccount } from "@/lib/auth/session";
+import { getCoreModelCounts, type CoreModelCounts } from "@/lib/clinic/metrics";
 
 export const dynamic = "force-dynamic";
 
-function buildStats(activeClinicCount: number) {
+function buildStats(counts: CoreModelCounts) {
   return [
     { label: "Citas hoy", value: "0", detail: "Sin datos conectados", icon: CalendarDays },
-    { label: "Pendientes", value: "0", detail: "Por confirmar", icon: Clock3 },
-    { label: "Pacientes", value: "0", detail: "Activos", icon: Users },
+    { label: "Pacientes", value: counts.patients.toString(), detail: "Activos", icon: Users },
+    { label: "Profesionales", value: counts.professionals.toString(), detail: "Activos", icon: Stethoscope },
     {
-      label: "Clinicas",
-      value: activeClinicCount.toString(),
-      detail: "Vinculadas al usuario",
-      icon: Building2,
+      label: "Servicios",
+      value: counts.services.toString(),
+      detail: "Activos",
+      icon: ClipboardList,
     },
   ];
 }
@@ -53,7 +54,8 @@ const clinicStatusLabels = {
 export default async function DashboardPage() {
   const account = await getCurrentAccount();
   const memberships = await getCurrentUserClinicMemberships();
-  const stats = buildStats(memberships.length);
+  const counts = await getCoreModelCounts(memberships.map((membership) => membership.clinicId));
+  const stats = buildStats(counts);
 
   return (
     <main className="min-h-screen bg-[#f7f8f4]">

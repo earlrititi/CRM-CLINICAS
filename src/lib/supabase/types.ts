@@ -117,6 +117,135 @@ export type Database = {
         };
         Relationships: [];
       };
+      patients: {
+        Row: {
+          birth_date: string | null;
+          clinic_id: string;
+          communications_consent: boolean;
+          contact_preference: Database["public"]["Enums"]["contact_preference"];
+          created_at: string;
+          created_by: string | null;
+          email: string | null;
+          first_name: string;
+          id: string;
+          identity_document: string | null;
+          internal_notes: string | null;
+          last_name: string;
+          phone: string | null;
+          registered_at: string;
+          status: Database["public"]["Enums"]["core_record_status"];
+          tags: string[];
+          updated_at: string;
+        };
+        Insert: {
+          birth_date?: string | null;
+          clinic_id: string;
+          communications_consent?: boolean;
+          contact_preference?: Database["public"]["Enums"]["contact_preference"];
+          created_at?: string;
+          created_by?: string | null;
+          email?: string | null;
+          first_name: string;
+          id?: string;
+          identity_document?: string | null;
+          internal_notes?: string | null;
+          last_name: string;
+          phone?: string | null;
+          registered_at?: string;
+          status?: Database["public"]["Enums"]["core_record_status"];
+          tags?: string[];
+          updated_at?: string;
+        };
+        Update: {
+          birth_date?: string | null;
+          clinic_id?: string;
+          communications_consent?: boolean;
+          contact_preference?: Database["public"]["Enums"]["contact_preference"];
+          created_at?: string;
+          created_by?: string | null;
+          email?: string | null;
+          first_name?: string;
+          id?: string;
+          identity_document?: string | null;
+          internal_notes?: string | null;
+          last_name?: string;
+          phone?: string | null;
+          registered_at?: string;
+          status?: Database["public"]["Enums"]["core_record_status"];
+          tags?: string[];
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      professional_services: {
+        Row: {
+          clinic_id: string;
+          created_at: string;
+          is_active: boolean;
+          professional_id: string;
+          service_id: string;
+          updated_at: string;
+        };
+        Insert: {
+          clinic_id: string;
+          created_at?: string;
+          is_active?: boolean;
+          professional_id: string;
+          service_id: string;
+          updated_at?: string;
+        };
+        Update: {
+          clinic_id?: string;
+          created_at?: string;
+          is_active?: boolean;
+          professional_id?: string;
+          service_id?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      professionals: {
+        Row: {
+          calendar_color: string;
+          clinic_id: string;
+          created_at: string;
+          created_by: string | null;
+          email: string | null;
+          full_name: string;
+          id: string;
+          phone: string | null;
+          specialty: string | null;
+          status: Database["public"]["Enums"]["core_record_status"];
+          updated_at: string;
+        };
+        Insert: {
+          calendar_color?: string;
+          clinic_id: string;
+          created_at?: string;
+          created_by?: string | null;
+          email?: string | null;
+          full_name: string;
+          id?: string;
+          phone?: string | null;
+          specialty?: string | null;
+          status?: Database["public"]["Enums"]["core_record_status"];
+          updated_at?: string;
+        };
+        Update: {
+          calendar_color?: string;
+          clinic_id?: string;
+          created_at?: string;
+          created_by?: string | null;
+          email?: string | null;
+          full_name?: string;
+          id?: string;
+          phone?: string | null;
+          specialty?: string | null;
+          status?: Database["public"]["Enums"]["core_record_status"];
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       profiles: {
         Row: {
           created_at: string;
@@ -141,6 +270,177 @@ export type Database = {
           id?: string;
           platform_role?: Database["public"]["Enums"]["platform_role"] | null;
           updated_at?: string;
+        };
+        Relationships: [];
+      };
+      resources: {
+        Row: {
+          clinic_id: string;
+          created_at: string;
+          created_by: string | null;
+          description: string | null;
+          id: string;
+          name: string;
+          status: Database["public"]["Enums"]["core_record_status"];
+          type: Database["public"]["Enums"]["resource_type"];
+          updated_at: string;
+        };
+        Insert: {
+          clinic_id: string;
+          created_at?: string;
+          created_by?: string | null;
+          description?: string | null;
+          id?: string;
+          name: string;
+          status?: Database["public"]["Enums"]["core_record_status"];
+          type?: Database["public"]["Enums"]["resource_type"];
+          updated_at?: string;
+        };
+        Update: {
+          clinic_id?: string;
+          created_at?: string;
+          created_by?: string | null;
+          description?: string | null;
+          id?: string;
+          name?: string;
+          status?: Database["public"]["Enums"]["core_record_status"];
+          type?: Database["public"]["Enums"]["resource_type"];
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      schedule_exceptions: {
+        Row: {
+          clinic_id: string;
+          created_at: string;
+          created_by: string | null;
+          ends_at: string;
+          id: string;
+          professional_id: string | null;
+          reason: string | null;
+          starts_at: string;
+          type: Database["public"]["Enums"]["schedule_exception_type"];
+          updated_at: string;
+        };
+        Insert: {
+          clinic_id: string;
+          created_at?: string;
+          created_by?: string | null;
+          ends_at: string;
+          id?: string;
+          professional_id?: string | null;
+          reason?: string | null;
+          starts_at: string;
+          type?: Database["public"]["Enums"]["schedule_exception_type"];
+          updated_at?: string;
+        };
+        Update: {
+          clinic_id?: string;
+          created_at?: string;
+          created_by?: string | null;
+          ends_at?: string;
+          id?: string;
+          professional_id?: string | null;
+          reason?: string | null;
+          starts_at?: string;
+          type?: Database["public"]["Enums"]["schedule_exception_type"];
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      services: {
+        Row: {
+          category: string | null;
+          clinic_id: string;
+          color: string | null;
+          created_at: string;
+          created_by: string | null;
+          currency: string;
+          description: string | null;
+          duration_minutes: number;
+          icon: string | null;
+          id: string;
+          name: string;
+          preparation_minutes: number;
+          price_cents: number;
+          recovery_minutes: number;
+          status: Database["public"]["Enums"]["core_record_status"];
+          updated_at: string;
+        };
+        Insert: {
+          category?: string | null;
+          clinic_id: string;
+          color?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          currency?: string;
+          description?: string | null;
+          duration_minutes: number;
+          icon?: string | null;
+          id?: string;
+          name: string;
+          preparation_minutes?: number;
+          price_cents?: number;
+          recovery_minutes?: number;
+          status?: Database["public"]["Enums"]["core_record_status"];
+          updated_at?: string;
+        };
+        Update: {
+          category?: string | null;
+          clinic_id?: string;
+          color?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          currency?: string;
+          description?: string | null;
+          duration_minutes?: number;
+          icon?: string | null;
+          id?: string;
+          name?: string;
+          preparation_minutes?: number;
+          price_cents?: number;
+          recovery_minutes?: number;
+          status?: Database["public"]["Enums"]["core_record_status"];
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      working_hours: {
+        Row: {
+          clinic_id: string;
+          created_at: string;
+          created_by: string | null;
+          ends_at: string;
+          id: string;
+          is_active: boolean;
+          professional_id: string;
+          starts_at: string;
+          updated_at: string;
+          weekday: number;
+        };
+        Insert: {
+          clinic_id: string;
+          created_at?: string;
+          created_by?: string | null;
+          ends_at: string;
+          id?: string;
+          is_active?: boolean;
+          professional_id: string;
+          starts_at: string;
+          updated_at?: string;
+          weekday: number;
+        };
+        Update: {
+          clinic_id?: string;
+          created_at?: string;
+          created_by?: string | null;
+          ends_at?: string;
+          id?: string;
+          is_active?: boolean;
+          professional_id?: string;
+          starts_at?: string;
+          updated_at?: string;
+          weekday?: number;
         };
         Relationships: [];
       };
@@ -169,7 +469,11 @@ export type Database = {
       clinic_member_status: "active" | "invited" | "suspended";
       clinic_role: "clinic_admin" | "reception" | "professional" | "readonly";
       clinic_status: "active" | "inactive" | "trialing" | "suspended";
+      contact_preference: "email" | "phone" | "sms" | "whatsapp" | "none";
+      core_record_status: "active" | "inactive";
       platform_role: "superadmin";
+      resource_type: "room" | "booth" | "equipment" | "chair" | "machine" | "other";
+      schedule_exception_type: "available" | "unavailable" | "vacation" | "manual_block";
     };
     CompositeTypes: Record<string, never>;
   };

@@ -88,6 +88,17 @@ Fase 2 completada:
 - Guards de servidor para usuario, rol y permiso por clinica.
 - Dashboard conectado al estado de membresias de clinica.
 
+Fase 3 completada:
+
+- Migracion Supabase para pacientes, profesionales, servicios, relacion profesional-servicio, horarios, excepciones y recursos.
+- Campos base orientados a minimizacion de datos para pacientes.
+- Restricciones de tenant con `clinic_id` en todos los modelos operativos.
+- RLS por pertenencia a clinica y permisos de gestion por rol.
+- Indices iniciales para busquedas y futuras consultas de disponibilidad.
+- Tipos TypeScript actualizados para los modelos principales.
+- Permisos de aplicacion ampliados para pacientes, profesionales, servicios, agenda y recursos.
+- Dashboard conectado a conteos reales de pacientes, profesionales y servicios.
+
 ## Siguiente fase
 
-Fase 3: modelos principales de pacientes, profesionales, servicios, salas/recursos y base de disponibilidad.
+Fase 4: motor de citas con citas, estados, historial, notas, bloqueo de solapes y base de disponibilidad.

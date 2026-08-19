@@ -23,6 +23,17 @@ La Fase 2 introduce la migracion `20260818120000_phase_2_multi_tenant_roles.sql`
 - Enums de rol/estado.
 - RLS y helpers SQL para superadmin, pertenencia y roles por clinica.
 
+La Fase 3 introduce la migracion `20260819100000_phase_3_core_models.sql` con:
+
+- `patients`: datos administrativos de pacientes/clientes, sin historia clinica sensible.
+- `professionals`: profesionales de una clinica.
+- `services`: servicios reservables con duracion, precio y buffers.
+- `professional_services`: servicios que puede realizar cada profesional.
+- `working_hours`: horario semanal por profesional.
+- `schedule_exceptions`: vacaciones, bloqueos y excepciones horarias.
+- `resources`: salas, cabinas, equipos u otros recursos fisicos para fases posteriores.
+- RLS por `clinic_id`, indices iniciales y restricciones de integridad.
+
 Para aplicarla en un proyecto Supabase real:
 
 ```bash
