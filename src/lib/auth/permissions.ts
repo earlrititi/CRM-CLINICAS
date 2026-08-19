@@ -28,6 +28,10 @@ export const clinicPermissions = [
   "schedule:manage",
   "resources:read",
   "resources:manage",
+  "appointments:read",
+  "appointments:manage",
+  "appointment_notes:read",
+  "appointment_notes:manage",
 ] as const;
 
 export type ClinicPermission = (typeof clinicPermissions)[number];
@@ -50,6 +54,10 @@ export const clinicRolePermissions = {
     "schedule:manage",
     "resources:read",
     "resources:manage",
+    "appointments:read",
+    "appointments:manage",
+    "appointment_notes:read",
+    "appointment_notes:manage",
   ],
   reception: [
     "clinic:read",
@@ -61,6 +69,10 @@ export const clinicRolePermissions = {
     "schedule:read",
     "schedule:manage",
     "resources:read",
+    "appointments:read",
+    "appointments:manage",
+    "appointment_notes:read",
+    "appointment_notes:manage",
   ],
   professional: [
     "clinic:read",
@@ -69,6 +81,9 @@ export const clinicRolePermissions = {
     "services:read",
     "schedule:read",
     "resources:read",
+    "appointments:read",
+    "appointment_notes:read",
+    "appointment_notes:manage",
   ],
   readonly: [
     "clinic:read",
@@ -77,6 +92,8 @@ export const clinicRolePermissions = {
     "services:read",
     "schedule:read",
     "resources:read",
+    "appointments:read",
+    "appointment_notes:read",
   ],
 } satisfies Record<ClinicRole, readonly ClinicPermission[]>;
 
@@ -108,3 +125,5 @@ export const appointmentStatuses = [
 ] as const;
 
 export type AppointmentStatus = (typeof appointmentStatuses)[number];
+
+export const activeAppointmentStatuses = ["pending", "confirmed", "waiting"] as const satisfies readonly AppointmentStatus[];

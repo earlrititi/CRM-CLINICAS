@@ -3,6 +3,165 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export type Database = {
   public: {
     Tables: {
+      appointment_notes: {
+        Row: {
+          appointment_id: string;
+          author_user_id: string | null;
+          body: string;
+          clinic_id: string;
+          created_at: string;
+          id: string;
+          is_internal: boolean;
+          updated_at: string;
+        };
+        Insert: {
+          appointment_id: string;
+          author_user_id?: string | null;
+          body: string;
+          clinic_id: string;
+          created_at?: string;
+          id?: string;
+          is_internal?: boolean;
+          updated_at?: string;
+        };
+        Update: {
+          appointment_id?: string;
+          author_user_id?: string | null;
+          body?: string;
+          clinic_id?: string;
+          created_at?: string;
+          id?: string;
+          is_internal?: boolean;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      appointment_resources: {
+        Row: {
+          appointment_id: string;
+          clinic_id: string;
+          created_at: string;
+          ends_at: string;
+          resource_id: string;
+          starts_at: string;
+          status: Database["public"]["Enums"]["appointment_status"];
+          updated_at: string;
+        };
+        Insert: {
+          appointment_id: string;
+          clinic_id: string;
+          created_at?: string;
+          ends_at?: string;
+          resource_id: string;
+          starts_at?: string;
+          status?: Database["public"]["Enums"]["appointment_status"];
+          updated_at?: string;
+        };
+        Update: {
+          appointment_id?: string;
+          clinic_id?: string;
+          created_at?: string;
+          ends_at?: string;
+          resource_id?: string;
+          starts_at?: string;
+          status?: Database["public"]["Enums"]["appointment_status"];
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      appointment_status_history: {
+        Row: {
+          appointment_id: string;
+          changed_by: string | null;
+          clinic_id: string;
+          created_at: string;
+          id: string;
+          new_status: Database["public"]["Enums"]["appointment_status"];
+          previous_status: Database["public"]["Enums"]["appointment_status"] | null;
+          reason: string | null;
+        };
+        Insert: {
+          appointment_id: string;
+          changed_by?: string | null;
+          clinic_id: string;
+          created_at?: string;
+          id?: string;
+          new_status: Database["public"]["Enums"]["appointment_status"];
+          previous_status?: Database["public"]["Enums"]["appointment_status"] | null;
+          reason?: string | null;
+        };
+        Update: {
+          appointment_id?: string;
+          changed_by?: string | null;
+          clinic_id?: string;
+          created_at?: string;
+          id?: string;
+          new_status?: Database["public"]["Enums"]["appointment_status"];
+          previous_status?: Database["public"]["Enums"]["appointment_status"] | null;
+          reason?: string | null;
+        };
+        Relationships: [];
+      };
+      appointments: {
+        Row: {
+          cancellation_reason: string | null;
+          cancelled_at: string | null;
+          clinic_id: string;
+          created_at: string;
+          created_by: string | null;
+          ends_at: string;
+          id: string;
+          patient_id: string;
+          professional_id: string;
+          rescheduled_from_id: string | null;
+          service_id: string;
+          source: Database["public"]["Enums"]["appointment_source"];
+          starts_at: string;
+          status: Database["public"]["Enums"]["appointment_status"];
+          title: string | null;
+          updated_at: string;
+          updated_by: string | null;
+        };
+        Insert: {
+          cancellation_reason?: string | null;
+          cancelled_at?: string | null;
+          clinic_id: string;
+          created_at?: string;
+          created_by?: string | null;
+          ends_at: string;
+          id?: string;
+          patient_id: string;
+          professional_id: string;
+          rescheduled_from_id?: string | null;
+          service_id: string;
+          source?: Database["public"]["Enums"]["appointment_source"];
+          starts_at: string;
+          status?: Database["public"]["Enums"]["appointment_status"];
+          title?: string | null;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Update: {
+          cancellation_reason?: string | null;
+          cancelled_at?: string | null;
+          clinic_id?: string;
+          created_at?: string;
+          created_by?: string | null;
+          ends_at?: string;
+          id?: string;
+          patient_id?: string;
+          professional_id?: string;
+          rescheduled_from_id?: string | null;
+          service_id?: string;
+          source?: Database["public"]["Enums"]["appointment_source"];
+          starts_at?: string;
+          status?: Database["public"]["Enums"]["appointment_status"];
+          title?: string | null;
+          updated_at?: string;
+          updated_by?: string | null;
+        };
+        Relationships: [];
+      };
       audit_logs: {
         Row: {
           action: string;
@@ -466,6 +625,15 @@ export type Database = {
       };
     };
     Enums: {
+      appointment_source: "internal" | "public_booking" | "imported";
+      appointment_status:
+        | "pending"
+        | "confirmed"
+        | "waiting"
+        | "cancelled"
+        | "no_show"
+        | "completed"
+        | "rescheduled";
       clinic_member_status: "active" | "invited" | "suspended";
       clinic_role: "clinic_admin" | "reception" | "professional" | "readonly";
       clinic_status: "active" | "inactive" | "trialing" | "suspended";

@@ -99,6 +99,17 @@ Fase 3 completada:
 - Permisos de aplicacion ampliados para pacientes, profesionales, servicios, agenda y recursos.
 - Dashboard conectado a conteos reales de pacientes, profesionales y servicios.
 
+Fase 4 completada:
+
+- Migracion Supabase para `appointments`, `appointment_resources`, `appointment_status_history` y `appointment_notes`.
+- Estados de cita y origen de cita modelados como enums.
+- Restriccion de no solape para citas activas del mismo profesional.
+- Restriccion de no solape para recursos fisicos asignados a citas activas.
+- Historial automatico de cambios de estado.
+- Auditoria automatica de creacion, cambios, cancelaciones y reprogramaciones de cita.
+- RLS por clinica con gestion de citas limitada a admin y recepcion.
+- Dashboard conectado a conteos reales de citas de hoy y citas pendientes.
+
 ## Siguiente fase
 
-Fase 4: motor de citas con citas, estados, historial, notas, bloqueo de solapes y base de disponibilidad.
+Fase 5: calendario interno con vistas diaria/semanal/mensual, filtros y acciones basicas sobre citas.

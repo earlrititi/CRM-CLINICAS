@@ -34,6 +34,16 @@ La Fase 3 introduce la migracion `20260819100000_phase_3_core_models.sql` con:
 - `resources`: salas, cabinas, equipos u otros recursos fisicos para fases posteriores.
 - RLS por `clinic_id`, indices iniciales y restricciones de integridad.
 
+La Fase 4 introduce la migracion `20260819120000_phase_4_appointment_engine.sql` con:
+
+- `appointments`: cita con paciente, profesional, servicio, estado, origen e intervalo UTC.
+- `appointment_resources`: recursos fisicos reservados por cita.
+- `appointment_status_history`: historial automatico de cambios de estado.
+- `appointment_notes`: notas operativas de cita.
+- Exclusiones `gist` para bloquear solapes de profesional y recurso en citas activas.
+- Triggers de sincronizacion de recursos, historial de estado y auditoria.
+- RLS por `clinic_id` y gestion de citas limitada a `clinic_admin` y `reception`.
+
 Para aplicarla en un proyecto Supabase real:
 
 ```bash

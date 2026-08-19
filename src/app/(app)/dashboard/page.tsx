@@ -3,6 +3,7 @@ import {
   CalendarDays,
   ClipboardList,
   CircleAlert,
+  Clock3,
   LogOut,
   Plus,
   Stethoscope,
@@ -19,7 +20,8 @@ export const dynamic = "force-dynamic";
 
 function buildStats(counts: CoreModelCounts) {
   return [
-    { label: "Citas hoy", value: "0", detail: "Sin datos conectados", icon: CalendarDays },
+    { label: "Citas hoy", value: counts.appointmentsToday.toString(), detail: "Activas", icon: CalendarDays },
+    { label: "Pendientes", value: counts.pendingAppointments.toString(), detail: "Por confirmar", icon: Clock3 },
     { label: "Pacientes", value: counts.patients.toString(), detail: "Activos", icon: Users },
     { label: "Profesionales", value: counts.professionals.toString(), detail: "Activos", icon: Stethoscope },
     {
@@ -97,7 +99,7 @@ export default async function DashboardPage() {
           </section>
         ) : null}
 
-        <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
           {stats.map((item) => {
             const Icon = item.icon;
 
@@ -124,7 +126,7 @@ export default async function DashboardPage() {
                 <CalendarDays aria-hidden="true" className="mx-auto h-10 w-10 text-[#0f766e]" />
                 <p className="mt-4 text-sm font-medium text-[#202722]">Sin citas cargadas</p>
                 <p className="mt-2 text-sm leading-6 text-[#667069]">
-                  El calendario se conectara al modelo de citas cuando entren las fases de datos y motor de agenda.
+                  La vista de calendario usara el motor de citas en la siguiente fase.
                 </p>
               </div>
             </div>
