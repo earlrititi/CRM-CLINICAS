@@ -37,6 +37,7 @@ export type ClinicMembershipWithClinic = ClinicMembership & {
     name: string;
     slug: string;
     status: ClinicStatus;
+    timezone: string;
   } | null;
 };
 
@@ -170,7 +171,7 @@ export async function getCurrentUserClinicMemberships(): Promise<ClinicMembershi
   const clinicIds = memberships.map((membership) => membership.clinic_id);
   const { data: clinics, error: clinicsError } = await supabase
     .from("clinics")
-    .select("id, name, slug, status")
+    .select("id, name, slug, status, timezone")
     .in("id", clinicIds)
     .order("name", { ascending: true });
 

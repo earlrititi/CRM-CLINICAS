@@ -10,6 +10,8 @@ import {
   UserPlus,
   Users,
 } from "lucide-react";
+import Link from "next/link";
+import type { Route } from "next";
 
 import { signOut } from "@/app/(app)/dashboard/actions";
 import { getCurrentUserClinicMemberships } from "@/lib/auth/guards";
@@ -118,15 +120,22 @@ export default async function DashboardPage() {
 
         <section className="mt-6 grid gap-6 lg:grid-cols-[1.4fr_0.9fr]">
           <div className="rounded-lg border border-[#d9ded6] bg-white shadow-sm">
-            <div className="border-b border-[#e4e8e2] px-5 py-4">
+            <div className="flex items-center justify-between gap-4 border-b border-[#e4e8e2] px-5 py-4">
               <h2 className="text-base font-semibold text-[#202722]">Agenda de hoy</h2>
+              <Link
+                className="inline-flex h-9 items-center gap-2 rounded-md border border-[#cfd7cf] bg-white px-3 text-sm font-medium text-[#202722] hover:border-[#0f766e] hover:text-[#0f766e]"
+                href={"/dashboard/calendar" as Route}
+              >
+                <CalendarDays aria-hidden="true" className="h-4 w-4" />
+                Calendario
+              </Link>
             </div>
             <div className="grid min-h-[340px] place-items-center px-5 py-12 text-center">
               <div className="max-w-sm">
                 <CalendarDays aria-hidden="true" className="mx-auto h-10 w-10 text-[#0f766e]" />
                 <p className="mt-4 text-sm font-medium text-[#202722]">Sin citas cargadas</p>
                 <p className="mt-2 text-sm leading-6 text-[#667069]">
-                  La vista de calendario usara el motor de citas en la siguiente fase.
+                  No hay citas programadas para hoy.
                 </p>
               </div>
             </div>

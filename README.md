@@ -33,6 +33,7 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxx
 ## Rutas iniciales
 
 - `/dashboard`: panel interno protegido cuando Supabase esta configurado.
+- `/dashboard/calendar`: calendario interno con vistas y filtros.
 - `/login`: acceso por magic link con Supabase Auth.
 - `/auth/callback`: callback de intercambio de codigo por sesion.
 - `/reservar/[clinicSlug]`: base de reserva publica por clinica.
@@ -110,6 +111,16 @@ Fase 4 completada:
 - RLS por clinica con gestion de citas limitada a admin y recepcion.
 - Dashboard conectado a conteos reales de citas de hoy y citas pendientes.
 
+Fase 5 completada:
+
+- Ruta interna `/dashboard/calendar`.
+- Vista diaria, semanal y mensual desde Server Components.
+- Navegacion por periodo anterior/siguiente.
+- Filtros por clinica, profesional, servicio y estado.
+- Tarjetas de cita con paciente, servicio, profesional, hora, estado y color.
+- Acceso al calendario desde el dashboard.
+- Estado local sin Supabase mantenido para desarrollo.
+
 ## Siguiente fase
 
-Fase 5: calendario interno con vistas diaria/semanal/mensual, filtros y acciones basicas sobre citas.
+Fase 6: reservas publicas por clinica con seleccion de servicio, profesional, fecha/hora y datos basicos del paciente.
