@@ -623,6 +623,36 @@ export type Database = {
         };
         Returns: boolean;
       };
+      create_public_booking: {
+        Args: {
+          booking_clinic_slug: string;
+          booking_date: string;
+          booking_professional_id: string | null;
+          booking_service_id: string;
+          booking_starts_at: string;
+          communications_consent?: boolean;
+          patient_email?: string | null;
+          patient_first_name: string;
+          patient_last_name: string;
+          patient_phone?: string | null;
+          website?: string | null;
+        };
+        Returns: string;
+      };
+      get_public_available_slots: {
+        Args: {
+          booking_clinic_slug: string;
+          target_date: string;
+          target_professional_id?: string | null;
+          target_service_id: string;
+        };
+        Returns: {
+          ends_at: string;
+          professional_id: string;
+          professional_name: string;
+          starts_at: string;
+        }[];
+      };
     };
     Enums: {
       appointment_source: "internal" | "public_booking" | "imported";

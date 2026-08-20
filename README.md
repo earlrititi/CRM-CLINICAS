@@ -121,6 +121,17 @@ Fase 5 completada:
 - Acceso al calendario desde el dashboard.
 - Estado local sin Supabase mantenido para desarrollo.
 
+Fase 6 completada:
+
+- Pagina publica `/reservar/[clinicSlug]` conectada a clinicas activas.
+- Seleccion de servicio, profesional opcional, fecha y hueco disponible.
+- Datos basicos del paciente con consentimiento de comunicaciones.
+- Confirmacion en pantalla tras recibir la reserva.
+- RPC publica para calcular huecos sin exponer citas internas.
+- RPC publica para crear paciente y cita pendiente sin abrir tablas sensibles a `anon`.
+- Politicas y grants publicos limitados a columnas no sensibles.
+- Honeypot basico contra spam en el formulario publico.
+
 ## Siguiente fase
 
-Fase 6: reservas publicas por clinica con seleccion de servicio, profesional, fecha/hora y datos basicos del paciente.
+Fase 7: notificaciones por email para confirmacion, cancelacion, reprogramacion y recordatorios.

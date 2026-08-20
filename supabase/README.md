@@ -44,6 +44,15 @@ La Fase 4 introduce la migracion `20260819120000_phase_4_appointment_engine.sql`
 - Triggers de sincronizacion de recursos, historial de estado y auditoria.
 - RLS por `clinic_id` y gestion de citas limitada a `clinic_admin` y `reception`.
 
+La Fase 6 introduce la migracion `20260820100000_phase_6_public_booking.sql` con:
+
+- Politicas `anon` de lectura publica para clinicas, servicios, profesionales y relaciones activas.
+- Grants por columnas para no exponer emails/telefonos de profesionales ni tablas internas.
+- RPC `get_public_available_slots` para calcular huecos sin exponer citas existentes.
+- RPC `create_public_booking` para crear paciente y cita pendiente desde la pagina publica.
+- Validacion de solapes mediante las restricciones del motor de citas.
+- Honeypot basico contra spam.
+
 Para aplicarla en un proyecto Supabase real:
 
 ```bash
